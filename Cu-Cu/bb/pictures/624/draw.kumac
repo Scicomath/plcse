@@ -1,0 +1,223 @@
+macro eB-CMS-draw
+fort/fil 66 200t.epsi
+meta 66 -111
+opt nbox
+set xsize 32
+set ysize 32
+set csiz 0.65 
+set vsiz 0.4
+set asiz 0.4
+set yhti 99
+set xval 0.50
+set yval 0.5
+set xwin 2.5
+set ywin 1.8
+set bwid 5.0
+set xwid 8.0
+set ywid 4.0
+set xlab 1.5
+set ylab 1.0
+set lwid 5.0
+set hwid 5.0
+set pwid 4.8
+set fwid 4.0
+set xtic 0.50
+set ytic 0.50
+set xmgl 3.0
+set ymgl 2.5
+set ndvx 506
+set ndvy 506
+set chhe 0.45
+set mscf 1.0
+set tfon 3
+set cfon -30
+set tfon -30
+igset txfp -130
+set lfon -60
+set vfon -60
+
+
+** create some vectors
+*****************************
+ve/cre B002x0(2,400)
+ve/cre B002x5(2,400)
+ve/cre B002x10(2,400)
+
+ve/cre B02x0(2,400)
+ve/cre B02x5(2,400)
+ve/cre B02x10(2,400)
+
+ve/cre B2x0(2,400)
+ve/cre B2x5(2,400)
+ve/cre B2x10(2,400)
+*******************************
+*****************************
+ve/cre B002y0(2,400)
+ve/cre B002y5(2,400)
+ve/cre B002y10(2,400)
+
+ve/cre B02y0(2,400)
+ve/cre B02y5(2,400)
+ve/cre B02y10(2,400)
+
+ve/cre B2y0(2,400)
+ve/cre B2y5(2,400)
+ve/cre B2y10(2,400)
+******************************
+
+***** read some data from the produced data
+*********************************************
+ve/read B002x0 B002x0y010.dat
+ve/read B002x5 B002x5y010.dat
+ve/read B002x10 B002x10y010.dat
+
+ve/read B02x0 B02x0y010.dat
+ve/read B02x5 B02x5y010.dat
+ve/read B02x10 B02x10y010.dat
+
+ve/read B2x0 B2x0y010.dat
+ve/read B2x5 B2x5y010.dat
+ve/read B2x10 B2x10y010.dat
+****************************************
+*********************************************
+ve/read B002y0 B002x010y0.dat
+ve/read B002y5 B002x010y5.dat
+ve/read B002y10 B002x010y10.dat
+
+ve/read B02y0 B02x010y0.dat
+ve/read B02y5 B02x010y5.dat
+ve/read B02y10 B02x010y10.dat
+
+ve/read B2y0 B2x010y0.dat
+ve/read B2y5 B2x010y5.dat
+ve/read B2y10 B2x010y10.dat
+****************************************
+
+*****draw some pictures
+igset pass 2
+
+opt logy
+zone 2 3
+null -10 10 0.1 5000000
+set chhe 0.4
+set dmod 1
+graph 400 B002x0(1,1:400) B002x0(2,1:400) l
+set dmod 2
+graph 400 B02x0(1,1:400) B02x0(2,1:400) l
+set dmod 3
+graph 400 B2x0(1,1:400) B2x0(2,1:400) l
+atitle 'Y (fm)' 'eB (MeV^2!)'
+*atitle 'eB?x! (MeV^2!)' 'eB?y! (MeV^2!)'
+igset txfp -130
+set chhe 0.45
+itx 2.5 150000.0 'X = 0.0 fm (a)'
+set chhe 0.35
+itx -9.0 1200000.0 '<[t] = 0.02 fm with solid line'
+itx -9.0 300000.0 '<[t] = 0.2 fm with dashed line'
+itx -9.0 70000.0 '<[t] = 2.0 fm with dotted line'
+
+
+null -10 10 0.1 500000
+set chhe 0.4
+set dmod 1
+graph 400 B002y0(1,1:400) B002y0(2,1:400) l
+set dmod 2
+graph 400 B02y0(1,1:400) B02y0(2,1:400) l
+set dmod 3
+graph 400 B2y0(1,1:400) B2y0(2,1:400) l
+atitle 'X (fm)' 'eB (MeV^2!)'
+*atitle 'eB?x! (MeV^2!)' 'eB?y! (MeV^2!)'
+igset txfp -130
+set chhe 0.45
+itx 2.5 120000.0 'Y = 0.0 fm (b)'
+set chhe 0.35
+*itx -9.0 250000.0 'Y = 0.0 fm with solid line for (b), (d) and (f)'
+*itx -9.0 160000.0 'Y = 5.0 fm with dashed line for (b), (d) and (f)'
+*itx -9.0 100000.0 'Y = 10.0 fm with dotted line for (b), (d) and (f)'
+
+
+*itx 214 100000 'b=12fm'
+*itx 214 45000 'b=8fm'
+*itx 214 25000 'b=4fm'
+*itx 214 10000 'b=2fm'
+
+
+null -10 10 1 300000
+set chhe 0.4
+set dmod 1
+graph 400 B002x5(1,1:400) B002x5(2,1:400) l
+set dmod 2
+graph 400 B02x5(1,1:400) B02x5(2,1:400) l
+set dmod 3
+graph 400 B2x5(1,1:400) B2x5(2,1:400) l
+atitle 'Y (fm)' 'eB (MeV^2!)'
+*atitle 'eB?x! (MeV^2!)' 'eB?y! (MeV^2!)'
+igset txfp -130
+set chhe 0.45
+itx 2.5 80000.0 'X = 5.0 fm (c)'
+
+*itx 214 100000 'b=12fm'
+*itx 214 45000 'b=8fm'
+*itx 214 25000 'b=4fm'
+*itx 214 10000 'b=2fm'
+
+null -10 10 0.1 200000
+set chhe 0.4
+set dmod 1
+graph 400 B002y5(1,1:400) B002y5(2,1:400) l
+set dmod 2
+graph 400 B02y5(1,1:400) B02y5(2,1:400) l
+set dmod 3
+graph 400 B2y5(1,1:400) B2y5(2,1:400) l
+atitle 'X (fm)' 'eB (MeV^2!)'
+*atitle 'eB?x! (MeV^2!)' 'eB?y! (MeV^2!)'
+igset txfp -130
+set chhe 0.45
+itx 2.5 50000.0 'Y = 5.0 fm (d)'
+
+null -10 10 1.0 200000
+set chhe 0.4
+set dmod 1
+graph 400 B002x10(1,1:400) B002x10(2,1:400) l
+set dmod 2
+graph 400 B02x10(1,1:400) B02x10(2,1:400) l
+set dmod 3
+graph 400 B2x10(1,1:400) B2x10(2,1:400) l
+atitle 'Y (fm)' 'eB (MeV^2!)'
+*atitle 'eB?x! (MeV^2!)' 'eB?y! (MeV^2!)'
+igset txfp -130
+set chhe 0.45
+itx 2.2 60000.0 'X = 10.0 fm (e)'
+
+*itx 214 100000 'b=12fm'
+*itx 214 45000 'b=8fm'
+*itx 214 25000 'b=4fm'
+*itx 214 10000 'b=2fm'
+
+
+null -10 10 0.1 100000
+set chhe 0.4
+set dmod 1
+graph 400 B002y10(1,1:400) B002y10(2,1:400) l
+set dmod 2
+graph 400 B02y10(1,1:400) B02y10(2,1:400) l
+set dmod 3
+graph 400 B2y10(1,1:400) B2y10(2,1:400) l
+atitle 'X (fm)' 'eB (MeV^2!)'
+*atitle 'eB?x! (MeV^2!)' 'eB?y! (MeV^2!)'
+igset txfp -130
+set chhe 0.45
+itx 2.2 20000.0 'Y = 10.0 fm (f)'
+
+*itx 214 100000 'b=12fm'
+*itx 214 45000 'b=8fm'
+*itx 214 25000 'b=4fm'
+*itx 214 10000 'b=2fm'
+
+set dmod 0
+ve/del *
+hi/del *
+set *
+igset *
+close 66
+return

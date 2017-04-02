@@ -1,3 +1,10 @@
+# Data files
+*.dat
+
+# figure files
+*.eps
+*.epsi
+
 # Compiled Object files
 *.slo
 *.lo

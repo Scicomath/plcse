@@ -1,0 +1,100 @@
+macro eB-bb-draw
+fort/fil 66 ratio-b-EE.epsi
+meta 66 -111
+opt nbox
+set xsize 25
+set ysize 25
+set csiz 0.85 
+set vsiz 0.85
+set asiz 0.85
+set yhti 99
+set xval 0.75
+set yval 0.75
+set xwin 3.5
+set ywin 3.2
+set bwid 6.0
+set xwid 4.0
+set ywid 4.5
+set xlab 3.5
+set ylab 2.0
+set lwid 6.0
+set hwid 6.0
+set pwid 5.8
+set fwid 5.0
+set xtic 0.90
+set ytic 0.90
+set xmgl 4.8
+set ymgl 3.8
+set ndvx 504
+set ndvy 504
+set chhe 0.55
+set mscf 1.0
+set tfon 3
+set cfon -30
+set tfon -30
+igset txfp -130
+set lfon -10
+set vfon -130
+
+
+** create some vectors
+*****************************
+ve/cre delta001(2,200)
+ve/cre delta002(2,200)
+ve/cre delta003(2,200)
+ve/cre delta011(2,200)
+ve/cre delta022(2,200)
+ve/cre delta033(2,200)
+
+ve/read delta001  ratio_200_lambda0.1R.dat 
+ve/read delta002  ratio_200_lambda0.2R.dat 
+ve/read delta003  ratio_200_lambda0.3R.dat 
+
+ve/read delta011  ratio_2760_lambda0.1R.dat 
+ve/read delta022  ratio_2760_lambda0.2R.dat 
+ve/read delta033  ratio_2760_lambda0.3R.dat 
+
+
+*****************************
+igset pass 3.5
+****************for 200 GeV
+*opt logy
+zone 1 2
+null 0 2 0.0 1.2
+set dmod 4
+graph 200 delta001(1,1:200) delta001(2,1:200) l
+set dmod 2
+graph 200 delta002(1,1:200) delta002(2,1:200) l
+set dmod 1
+graph 200 delta003(1,1:200) delta003(2,1:200) l
+atitle 'b/R' '|a?+-!|/a?++!'
+set chhe 0.6
+itx 1.35 1.00 '200 GeV (a)'
+set chhe 0.45
+itx 0.2 1.05 'Solid line: <[l]> = 0.3R'
+itx 0.2 0.90 'Dashed line: <[l]> = 0.2R'
+itx 0.2 0.75 'Dashed-dotted line: <[l]> = 0.1R'
+
+***************** for 2760 GeV
+null 0 2 0.0 1.5
+set dmod 4
+graph 200 delta011(1,1:200) delta011(2,1:200) l
+set dmod 2
+graph 200 delta022(1,1:200) delta022(2,1:200) l
+set dmod 1
+graph 200 delta033(1,1:200) delta033(2,1:200) l
+atitle 'b/R' '|a?+-!|/a?++!'
+set chhe 0.6
+itx 1.35 1.00 '2760 GeV (b)'
+set chhe 0.45
+itx 0.2 1.05 'Solid line: <[l]> = 0.3R'
+itx 0.2 0.90 'Dashed line: <[l]> = 0.2R'
+itx 0.2 0.75 'Dashed-dotted line: <[l]> = 0.1R'
+
+set dmod 0
+ve/del *
+hi/del *
+set *
+igset *
+close 66
+return
