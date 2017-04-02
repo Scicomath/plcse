@@ -109,7 +109,7 @@
 
         atau=(ataui/x(3))*ataui*exp((-1.0/27.0)*
      *       (x(3)*x(3)-ataui*ataui))
-         f=10.0*2.0*(25.0/81.0)*aksi*atau
+         f=2.0*(25.0/81.0)*aksi*atau
 
 	RETURN
 	END
