@@ -294,7 +294,8 @@ static int eB_Part_Int(const int *ndim, const double xx[], const int *ncomp,
   else
      sign = -1.0; // for ``$-$'' mover
   @#
-  double temp = (zp/tanh(Y0) + sign * t )*sinh(Y) - z * cosh(Y);
+  // |double temp = (zp/tanh(Y0) + sign * t )*sinh(Y) - z * cosh(Y);|
+  double temp = ( sign * t )*sinh(Y) - z * cosh(Y); // Mo Yujun method
   // |temp| is the second term in denominator
   denominator = pow(Sq(xp - x) + Sq(yp - y) +
                     Sq(temp),1.5);
@@ -367,7 +368,8 @@ static int eB_Spec_Int(const int *ndim, const double xx[], const int *ncomp,
   xp = xpperp * cos(phip);
   yp = xpperp * sin(phip);
   @#
-  double temp = (zp/tanh(Y0) + sign * t )*sinh(Y0) - z * cosh(Y0);
+  // |double temp = (zp/tanh(Y0) + sign * t )*sinh(Y0) - z * cosh(Y0);|
+  double temp = ( sign * t )*sinh(Y0) - z * cosh(Y0); // Mo Yujun method
   // |temp| is the second term in denominator
   denominator = pow(Sq(xp - x) + Sq(yp - y) +
                     Sq(temp),1.5);
@@ -548,6 +550,7 @@ int csefun(double *app, double *apm, double *delta_pp, double *delta_pm)
 
   Vegas(3,1,delta_pp_Int, NULL, nvec, epsrel, epsabs, flags, seed, mineval, maxeval, nstart, nincrease, nbatch, gridno, statefile, spin, &neval, &fail, delta_pp, &interror, &prob);
   Vegas(3,1,delta_pm_Int, NULL, nvec, epsrel, epsabs, flags, seed, mineval, maxeval, nstart, nincrease, nbatch, gridno, statefile, spin, &neval, &fail, delta_pm, &interror, &prob);
+  printf("delta_pp = %g delta_pm = %g\n", *delta_pp, *delta_pm);
   *app = 1.0/Sq(Np)*Sq(M_PI)/16.0*(*delta_pp);
   *apm = 1.0/(Np*Nm)*Sq(M_PI)/16.0*(*delta_pm);
   return 0;
@@ -602,7 +605,7 @@ int main(int argc, char **argv)
   z = 0.0;
   t0 = 2.0 * R * exp(-Y0);
   t = t0;
-  printf("# app, abs(apm)/app\n");
+  printf("# app, apm, abs(apm)/app\n");
   while (fscanf(fp, "%lf%lf", &tempb, &tempNpm) == 2) {
     b = tempb;
     Np = tempNpm/2.0;
@@ -610,7 +613,7 @@ int main(int argc, char **argv)
     eB(&eBy, &totalerror, 0);
     eBy0 = eBy/Sq(hbarc);
     csefun(&app, &apm, &delta_pp, &delta_pm);
-    printf("%g, %g\n", app, fabs(apm)/app);
+    printf("%g, %g, %g\n", app, apm, fabs(apm)/app);
   }
   return 0;
 }
