@@ -204,8 +204,7 @@ sign= 1.0;
 else
 sign= -1.0;
 
-
-double temp= (sign*t)*sinh(Y)-z*cosh(Y);
+double temp= (zp/tanh(Y0)+sign*t)*sinh(Y)-z*cosh(Y);
 
 denominator= pow(Sq(xp-x)+Sq(yp-y)+
 Sq(temp),1.5);
@@ -226,7 +225,7 @@ return 0;
 #line 30 "./aixin.w"
 
 /*13:*/
-#line 316 "./aixin.w"
+#line 315 "./aixin.w"
 
 static int eB_Spec_Int(const int*ndim,const double xx[],const int*ncomp,
 double ff[],void*userdata){
@@ -282,8 +281,7 @@ zp= Imin[2]+(Imax[2]-Imin[2])*xx[2];
 xp= xpperp*cos(phip);
 yp= xpperp*sin(phip);
 
-
-double temp= (sign*t)*sinh(Y0)-z*cosh(Y0);
+double temp= (zp/tanh(Y0)+sign*t)*sinh(Y0)-z*cosh(Y0);
 
 denominator= pow(Sq(xp-x)+Sq(yp-y)+
 Sq(temp),1.5);
@@ -304,7 +302,7 @@ return 0;
 #line 31 "./aixin.w"
 
 /*14:*/
-#line 390 "./aixin.w"
+#line 388 "./aixin.w"
 
 int eB(double*eBy,double*totalerror,const int verbose){
 int comp,nregions,neval,fail;
@@ -345,7 +343,7 @@ return 0;
 #line 32 "./aixin.w"
 
 /*21:*/
-#line 633 "./aixin.w"
+#line 631 "./aixin.w"
 
 double sqrtStoY(double sqrtS){
 double E,p,m,Y;
@@ -360,7 +358,7 @@ return Y;
 #line 33 "./aixin.w"
 
 /*16:*/
-#line 450 "./aixin.w"
+#line 448 "./aixin.w"
 
 double xifun(double xp,double yp,char sign)
 {
@@ -378,7 +376,7 @@ return exp(-fabs(y_minus-yp)/lambda);
 #line 34 "./aixin.w"
 
 /*17:*/
-#line 464 "./aixin.w"
+#line 462 "./aixin.w"
 
 static int delta_pp_Int(const int*ndim,const double xx[],const int*ncomp,double ff[],void*userdata)
 {
@@ -421,7 +419,7 @@ return 0;
 #line 35 "./aixin.w"
 
 /*18:*/
-#line 503 "./aixin.w"
+#line 501 "./aixin.w"
 
 static int delta_pm_Int(const int*ndim,const double xx[],const int*ncomp,double ff[],void*userdata)
 {
@@ -464,7 +462,7 @@ return 0;
 #line 36 "./aixin.w"
 
 /*19:*/
-#line 545 "./aixin.w"
+#line 543 "./aixin.w"
 
 int csefun(double*app,double*apm,double*delta_pp,double*delta_pm)
 {
@@ -483,7 +481,7 @@ return 0;
 #line 37 "./aixin.w"
 
 /*20:*/
-#line 560 "./aixin.w"
+#line 558 "./aixin.w"
 
 int main(int argc,char**argv)
 {
@@ -519,7 +517,7 @@ return 0;
 
 
 /*22:*/
-#line 664 "./aixin.w"
+#line 662 "./aixin.w"
 
 if(strcmp(argv[1],"Au")==0){
 R= 6.38;
@@ -542,7 +540,7 @@ return 0;
 }
 
 /*:22*/
-#line 594 "./aixin.w"
+#line 592 "./aixin.w"
 
 Y0= sqrtStoY(atof(argv[2]));
 lambda= atof(argv[3])*R;

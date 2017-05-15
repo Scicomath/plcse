@@ -294,8 +294,7 @@ static int eB_Part_Int(const int *ndim, const double xx[], const int *ncomp,
   else
      sign = -1.0; // for ``$-$'' mover
   @#
-  // |double temp = (zp/tanh(Y0) + sign * t )*sinh(Y) - z * cosh(Y);|
-  double temp = ( sign * t )*sinh(Y) - z * cosh(Y); // Mo Yujun method
+  double temp = (zp/tanh(Y0) + sign * t )*sinh(Y) - z * cosh(Y);
   // |temp| is the second term in denominator
   denominator = pow(Sq(xp - x) + Sq(yp - y) +
                     Sq(temp),1.5);
@@ -368,8 +367,7 @@ static int eB_Spec_Int(const int *ndim, const double xx[], const int *ncomp,
   xp = xpperp * cos(phip);
   yp = xpperp * sin(phip);
   @#
-  // |double temp = (zp/tanh(Y0) + sign * t )*sinh(Y0) - z * cosh(Y0);|
-  double temp = ( sign * t )*sinh(Y0) - z * cosh(Y0); // Mo Yujun method
+  double temp = (zp/tanh(Y0) + sign * t )*sinh(Y0) - z * cosh(Y0);
   // |temp| is the second term in denominator
   denominator = pow(Sq(xp - x) + Sq(yp - y) +
                     Sq(temp),1.5);

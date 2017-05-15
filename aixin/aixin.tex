@@ -392,11 +392,9 @@ ${}\|Y\K\\{Imin}[\T{3}]+(\\{Imax}[\T{3}]-\\{Imin}[\T{3}])*\\{xx}[\T{3}]{}$;%
 \&{if} ${}(\\{flag}\E\.{'+'}){}$\1\5
 ${}\\{sign}\K\T{1.0}{}$;\SHC{ for ``$+$'' mover }\2\6
 \&{else}\1\5
-${}\\{sign}\K{-}\T{1.0}{}$;\SHC{ for ``$-$'' mover }\SHC{ \PB{\&{double} %
-\\{temp}${}\K(\\{zp}/\\{tanh}(\.{Y0})+\\{sign}*\|t)*\\{sinh}(\|Y)-\|z*\\{cosh}(%
-\|Y);$} }\2\7
-\&{double} \\{temp}${}\K(\\{sign}*\|t)*\\{sinh}(\|Y)-\|z*\\{cosh}(\|Y){}$;\SHC{
-Mo Yujun method }\SHC{ \PB{\\{temp}} is the second term in denominator }\7
+${}\\{sign}\K{-}\T{1.0}{}$;\SHC{ for ``$-$'' mover }\2\7
+\&{double} \\{temp}${}\K(\\{zp}/\\{tanh}(\.{Y0})+\\{sign}*\|t)*\\{sinh}(\|Y)-%
+\|z*\\{cosh}(\|Y){}$;\SHC{ \PB{\\{temp}} is the second term in denominator }\7
 ${}\\{denominator}\K\\{pow}(\\{Sq}(\\{xp}-\|x)+\\{Sq}(\\{yp}-\|y)+\\{Sq}(%
 \\{temp}),\39\T{1.5});{}$\6
 ${}\\{ff}[\T{0}]\K\\{sign}*\\{Sq}(\\{hbarc})*\|Z*\\{alpha\_EM}*\|f(\|Y)*%
@@ -474,11 +472,9 @@ ${}\\{Imax}[\T{2}]\K{-}\\{Imin}[\T{2}]{}$;\SHC{ limits of $z'$: $-R/\cosh Y_0 %
 ${}\\{zp}\K\\{Imin}[\T{2}]+(\\{Imax}[\T{2}]-\\{Imin}[\T{2}])*\\{xx}[\T{2}]{}$;%
 \SHC{ scale \PB{\\{xx}[\T{2}]} }\7
 ${}\\{xp}\K\\{xpperp}*\\{cos}(\\{phip});{}$\6
-${}\\{yp}\K\\{xpperp}*\\{sin}(\\{phip}){}$;\SHC{ \PB{\&{double} \\{temp}${}\K(%
-\\{zp}/\\{tanh}(\.{Y0})+\\{sign}*\|t)*\\{sinh}(\.{Y0})-\|z*\\{cosh}(\.{Y0});$}
-}\7
-\&{double} \\{temp}${}\K(\\{sign}*\|t)*\\{sinh}(\.{Y0})-\|z*\\{cosh}(%
-\.{Y0}){}$;\SHC{ Mo Yujun method }\SHC{ \PB{\\{temp}} is the second term in
+${}\\{yp}\K\\{xpperp}*\\{sin}(\\{phip}){}$;\7
+\&{double} \\{temp}${}\K(\\{zp}/\\{tanh}(\.{Y0})+\\{sign}*\|t)*\\{sinh}(%
+\.{Y0})-\|z*\\{cosh}(\.{Y0}){}$;\SHC{ \PB{\\{temp}} is the second term in
 denominator }\7
 ${}\\{denominator}\K\\{pow}(\\{Sq}(\\{xp}-\|x)+\\{Sq}(\\{yp}-\|y)+\\{Sq}(%
 \\{temp}),\39\T{1.5});{}$\6
