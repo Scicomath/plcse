@@ -26,11 +26,11 @@ Cu20001 = csvread('result/Cu200GeV0.1.txt',1,0);
 Cu20002 = csvread('result/Cu200GeV0.2.txt',1,0);
 Cu20003 = csvread('result/Cu200GeV0.3.txt',1,0);
 
-Au62Alpha = -48.4578009247;
-Au200Alpha = -71.9051515658;
-Pb2760Alpha = -44.8215730119;
-Cu200Alpha = -114.430860825;
-Cu62Alpha = -113.630662978;
+Au62Alpha = -60.3980575503; % lambda = 0.2
+Au200Alpha = -87.8939571063; % lambda = 0.2
+Pb2760Alpha = -162.363172344; % lambda = 0.2
+Cu200Alpha = -124.376317721; % lambda = 0.3
+Cu62Alpha = -111.913014855; % lambda = 0.3
 %% plot compare 200GeV and 2760GeV
 linewidth = 2;
 fontsize = 16;
@@ -42,9 +42,9 @@ plot(1:8,Pb2760same(:,2),'ro','MarkerFaceColor','r','MarkerSize',markersize)
 % Pb 2760GeV opp exp
 plot(1:8,Pb2760opp(:,2),'ro','MarkerSize',markersize)
 % Pb 2760GeV same theory
-plot(1:8,Pb2760Alpha*Pb276003(1:8,1),'-r','LineWidth',linewidth)
+plot(1:8,Pb2760Alpha*Pb276002(1:8,1),'-r','LineWidth',linewidth)
 % Pb 2760GeV opp theory
-plot(1:8,Pb2760Alpha*Pb276003(1:8,2),'--r','LineWidth',linewidth)
+plot(1:8,Pb2760Alpha*Pb276002(1:8,2),'--r','LineWidth',linewidth)
 
 % Au 200GeV same exp
 plot(1:8,Au200same(:,2),'bs','MarkerFaceColor','b','MarkerSize',markersize)
