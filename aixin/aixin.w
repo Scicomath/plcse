@@ -77,6 +77,7 @@ double Pow3(double num) {
 static const double alpha_EM = 1.0 / 137.0;
 static const double hbarc = 197.32696;
 
+static int method = 0; // 0 for ellipsoid model, 1 for disklike model
 static double R; // radius of the nucleus
 static double b; // impact parameter
 static double d; // geometry distribution factor of the nucleus
@@ -294,7 +295,14 @@ static int eB_Part_Int(const int *ndim, const double xx[], const int *ncomp,
   else
      sign = -1.0; // for ``$-$'' mover
   @#
-  double temp = (zp/tanh(Y0) + sign * t )*sinh(Y) - z * cosh(Y);
+  double temp;
+  if (method == 0) {
+    temp = (zp/tanh(Y0) + sign * t )*sinh(Y) - z * cosh(Y);
+  } else if (method == 1) {
+    temp = ( sign * t )*sinh(Y) - z * cosh(Y);
+  } else {
+    printf("Error: method must be 0(ellipsoid) or 1(disklike)");
+  }
   // |temp| is the second term in denominator
   denominator = pow(Sq(xp - x) + Sq(yp - y) +
                     Sq(temp),1.5);
@@ -367,7 +375,14 @@ static int eB_Spec_Int(const int *ndim, const double xx[], const int *ncomp,
   xp = xpperp * cos(phip);
   yp = xpperp * sin(phip);
   @#
-  double temp = (zp/tanh(Y0) + sign * t )*sinh(Y0) - z * cosh(Y0);
+  double temp;
+  if (method == 0) {
+    temp = (zp/tanh(Y0) + sign * t )*sinh(Y0) - z * cosh(Y0);
+  } else if (method == 1) {
+    temp = ( sign * t )*sinh(Y0) - z * cosh(Y0);
+  } else {
+    printf("Error: method must be 0(ellipsoid) or 1(disklike)");
+  }
   // |temp| is the second term in denominator
   denominator = pow(Sq(xp - x) + Sq(yp - y) +
                     Sq(temp),1.5);
@@ -582,19 +597,27 @@ int main(int argc, char **argv)
   spin = NULL;
   @#
   
-  if (argc != 5) {
-    printf("Error: must have 4 parameters!\n"
-           "Usage: aixin Au/Pb/Cu sqrtS lambda Nfile \n");
+  if (argc != 6) {
+    printf("Error: must have 5 parameters!\n"
+           "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
     return 0;
   }
   @#
-  
+  if (strcmp(argv[1], "ellipsoid") == 0) {
+    method = 0;
+  } else if (strcmp(argv[1], "disklike") == 0) {
+    method = 1;
+  } else {
+    printf("Error: method must be ellipsoid or disklike\n"
+            "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+  }
   @<Set nuclear parameters@>@/
-  Y0 = sqrtStoY(atof(argv[2]));
-  lambda = atof(argv[3]) * R;
-  fp = fopen(argv[4], "r");
+  
+  Y0 = sqrtStoY(atof(argv[3]));
+  lambda = atof(argv[4]) * R;
+  fp = fopen(argv[5], "r");
   if (fp == NULL) {
-    printf("Error: Can't open %s\n", argv[4]);
+    printf("Error: Can't open %s\n", argv[5]);
     exit(EXIT_FAILURE);
   }
   a=0.5;
@@ -660,17 +683,17 @@ n_0 = 7.69244 \times 10^{-4} \quad \text{for} \prescript{208}{}{\mathrm{Pb}}, \\
 n_0 = 2.67894 \times 10^{-3} \quad \text{for} \prescript{63}{}{\mathrm{Cu}}.
 \end{gather}
 @<Set nuclear parameters@>=
-if (strcmp(argv[1], "Au") == 0) {
+if (strcmp(argv[2], "Au") == 0) {
     R = 6.38; 
     d = 0.535;
     n0 = 8.59624e-4;
     Z = 79.0;
-  }@+ else if (strcmp(argv[1], "Pb") == 0) {
+  }@+ else if (strcmp(argv[2], "Pb") == 0) {
     R = 6.624;
     d = 0.549;
     n0 = 7.69244e-4;
     Z = 82.0;
-  }@+ else if (strcmp(argv[1], "Cu") == 0) {
+  }@+ else if (strcmp(argv[2], "Cu") == 0) {
     R = 4.214;
     d = 0.586;
     n0 = 2.67894e-3;
