@@ -2,6 +2,7 @@
 aixin
 aixin.tex
 aixin.c
+auto/
 
 # Tex file
 *.aux
