@@ -10,8 +10,6 @@ aixin
 *.pdf
 *.scn
 
-# Data files
-*.dat
 
 # figure files
 *.eps

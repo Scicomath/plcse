@@ -548,7 +548,7 @@ int csefun(double *app, double *apm, double *delta_pp, double *delta_pm)
 
   Vegas(3,1,delta_pp_Int, NULL, nvec, epsrel, epsabs, flags, seed, mineval, maxeval, nstart, nincrease, nbatch, gridno, statefile, spin, &neval, &fail, delta_pp, &interror, &prob);
   Vegas(3,1,delta_pm_Int, NULL, nvec, epsrel, epsabs, flags, seed, mineval, maxeval, nstart, nincrease, nbatch, gridno, statefile, spin, &neval, &fail, delta_pm, &interror, &prob);
-  printf("delta_pp = %g delta_pm = %g\n", *delta_pp, *delta_pm);
+  // |printf("delta_pp = %g delta_pm = %g\n", *delta_pp, *delta_pm);|
   *app = 1.0/Sq(Np)*Sq(M_PI)/16.0*(*delta_pp);
   *apm = 1.0/(Np*Nm)*Sq(M_PI)/16.0*(*delta_pm);
   return 0;
