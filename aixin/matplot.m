@@ -33,7 +33,7 @@ Cu200Alpha = -124.376317721; % lambda = 0.3
 Cu62Alpha = -111.913014855; % lambda = 0.3
 %% plot compare 200GeV and 2760GeV
 linewidth = 2;
-fontsize = 17;
+fontsize = 18;
 markersize = 10;
 figure
 hold on
@@ -69,7 +69,7 @@ xlabel('Centrality','FontSize',fontsize)
 ylabel('$\cos(\varphi_\alpha + \varphi_\beta - 2 \Psi_{RP})$','Interpreter','latex','FontSize',fontsize)
 %% plot compare Au-Au and Cu-Cu at 200GeV
 linewidth = 2;
-fontsize = 17;
+fontsize = 18;
 markersize = 10;
 figure
 subplot('Position',[0.10 0.53 0.88 0.43])
@@ -110,7 +110,7 @@ ylabel('$\cos(\varphi_\alpha + \varphi_\beta - 2 \Psi_{RP})$','Interpreter','lat
 
 % plot compare Au-Au and Cu-Cu at 62GeV
 linewidth = 2;
-fontsize = 17;
+fontsize = 18;
 markersize = 10;
 subplot('Position',[0.10 0.07 0.88 0.43])
 
