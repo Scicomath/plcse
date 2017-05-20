@@ -3,6 +3,7 @@ aixin
 aixin.tex
 aixin.c
 auto/
+diff.tex
 
 # Tex file
 *.aux
