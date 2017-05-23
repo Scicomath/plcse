@@ -11,14 +11,14 @@
 
 \begin{document}
 
-\title{A Program to Calculate Chiral Charge Separation in Heavy-Ion Collisions}
+\title{A Program to Calculate Chiral Magnetic Effect in Heavy-Ion Collisions}
 \author{Ai Xin}
 
 \maketitle
 
 @* Introduction.
 
-This is a program to calculate Chiral Charge Separation in Heavy-Ion Collisions.
+This is a program to calculate Chiral Magnetic Effect in Heavy-Ion Collisions.
 Here is an overview of the structure of the program:
 @c
 @<Header files to include@>@/
