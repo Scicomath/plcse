@@ -9,6 +9,8 @@ Cu62opp = csvread('exp data/Cu62GeVopp.csv');
 Cu62same = csvread('exp data/Cu62GeVsame.csv');
 Cu200opp = csvread('exp data/Cu200GeVopp.csv');
 Cu200same = csvread('exp data/Cu200GeVsame.csv');
+
+
 % theory data
 Au6201 = csvread('result/Au62GeV0.1.txt',1,0);
 Au6202 = csvread('result/Au62GeV0.2.txt',1,0);
@@ -31,6 +33,7 @@ Au200Alpha = -87.8939571063; % lambda = 0.2
 Pb2760Alpha = -162.363172344; % lambda = 0.2
 Cu200Alpha = -124.376317721; % lambda = 0.3
 Cu62Alpha = -111.913014855; % lambda = 0.3
+
 %% plot compare 200GeV and 2760GeV
 linewidth = 2;
 fontsize = 18;
@@ -150,3 +153,5 @@ ax = gca;
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
 ylabel('$a_{++},\,a+{+-}$','Interpreter','latex','FontSize',fontsize)
+
+% compara to H
