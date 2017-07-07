@@ -28,6 +28,31 @@ Cu20001 = csvread('result/Cu200GeV0.1.txt',1,0);
 Cu20002 = csvread('result/Cu200GeV0.2.txt',1,0);
 Cu20003 = csvread('result/Cu200GeV0.3.txt',1,0);
 
+fprintf('Au62:\n');
+[Au62expDiff, Au62theoDiff, Au62alpha, Au62mse] = gammaDiffFun(Au62opp,Au62same,Au6201,0); %min
+gammaDiffFun(Au62opp,Au62same,Au6202,0);
+gammaDiffFun(Au62opp,Au62same,Au6203,0);
+
+fprintf('Au200:\n');
+[Au200expDiff, Au200theoDiff, Au200alpha,Au200mse] = gammaDiffFun(Au200opp,Au200same,Au20001,0); %min
+gammaDiffFun(Au200opp,Au200same,Au20002,0);
+gammaDiffFun(Au200opp,Au200same,Au20003,0);
+
+fprintf('Pb2760:\n');
+[Pb2760expDiff, Pb2760theoDiff, Pb2760alpha,Pb2760mse] = gammaDiffFun(Pb2760opp,Pb2760same,Pb276001,0); %min
+gammaDiffFun(Pb2760opp,Pb2760same,Pb276002,0);
+gammaDiffFun(Pb2760opp,Pb2760same,Pb276003,0);
+
+fprintf('Cu62:\n');
+[Cu62expDiff, Cu62theoDiff, Cu62alpha,Cu62mse] = gammaDiffFun(Cu62opp,Cu62same,Cu6201,0); %min
+gammaDiffFun(Cu62opp,Cu62same,Cu6202,0);
+gammaDiffFun(Cu62opp,Cu62same,Cu6203,0);
+
+fprintf('Cu200:\n');
+gammaDiffFun(Cu200opp,Cu200same,Cu20001,0); 
+[Cu200expDiff, Cu200theoDiff, Cu200alpha,Cu200mse] = gammaDiffFun(Cu200opp,Cu200same,Cu20002,0); %min
+gammaDiffFun(Cu200opp,Cu200same,Cu20003,0);
+
 Au62Alpha = -60.3980575503; % lambda = 0.2
 Au200Alpha = -87.8939571063; % lambda = 0.2
 Pb2760Alpha = -162.363172344; % lambda = 0.2
@@ -41,26 +66,19 @@ markersize = 10;
 figure
 hold on
 box on
-% Pb 2760GeV same exp
-plot(1:8,-Pb2760same(:,2),'ro','MarkerFaceColor','r','MarkerSize',markersize)
-% Pb 2760GeV opp exp
-plot(1:8,-Pb2760opp(:,2),'ro','MarkerSize',markersize)
-% Pb 2760GeV same theory
-plot(1:8,-Pb2760Alpha*Pb276002(1:8,1),'-r','LineWidth',linewidth)
-% Pb 2760GeV opp theory
-plot(1:8,-Pb2760Alpha*Pb276002(1:8,2),'--r','LineWidth',linewidth)
+% Pb 2760GeV diff exp
+plot(1:8,Pb2760expDiff,'ro','MarkerFaceColor','r','MarkerSize',markersize)
+% Pb 2760GeV diff theory
+plot(1:8,Pb2760alpha*Pb2760theoDiff,'-r','LineWidth',linewidth)
 
-% Au 200GeV same exp
-plot(1:8,-Au200same(:,2),'bs','MarkerFaceColor','b','MarkerSize',markersize)
-% Au 200GeV opp exp
-plot(1:8,-Au200opp(:,2),'bs','MarkerSize',markersize)
+% Au 200GeV diff exp
+plot(1:8,Au200expDiff,'bs','MarkerFaceColor','b','MarkerSize',markersize)
 % Au 200GeV same theory
-plot(1:8,-Au200Alpha*Au20002(1:8,1),'-b','LineWidth',linewidth)
-% Au 200GeV opp theory
-plot(1:8,-Au200Alpha*Au20002(1:8,2),'--b','LineWidth',linewidth)
+plot(1:8,Au200alpha*Au200theoDiff,'-b','LineWidth',linewidth)
+
 set(gca,'linewidth',2);
-legend({'Pb $2760\,\mathrm{GeV}$ $a_{++}$ Exp.','Pb $2760\,\mathrm{GeV}$ $a_{+-}$ Exp.','Pb $2760\,\mathrm{GeV}$ $a_{++}$ Theory','Pb $2760\,\mathrm{GeV}$ $a_{+-}$ Theory',...
-    'Au $200\,\mathrm{GeV}$ $a_{++}$ Exp.','Au $200\,\mathrm{GeV}$ $a_{+-}$ Exp.','Au $200\,\mathrm{GeV}$ $a_{++}$ Theory','Au $200\,\mathrm{GeV}$ $a_{+-}$ Theory'},...
+legend({'Pb $2760\,\mathrm{GeV}$ Exp.','Pb $2760\,\mathrm{GeV}$ Theory',...
+    'Au $200\,\mathrm{GeV}$ Exp.','Au $200\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest')
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
@@ -69,7 +87,7 @@ ax = gca;
 %ax.YTick = 10.^[-6:-2];
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$a_{++},\,a_{+-}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$a_{++}-a_{+-}$','Interpreter','latex','FontSize',fontsize)
 %% plot compare Au-Au and Cu-Cu at 200GeV
 linewidth = 2;
 fontsize = 18;
@@ -79,37 +97,30 @@ subplot('Position',[0.10 0.53 0.88 0.43])
 hold on
 box on
 % Cu 200GeV same exp
-plot(1:7,-Cu200same(:,2),'ro','MarkerFaceColor','r','MarkerSize',markersize)
-% Cu 200GeV opp exp
-plot(1:7,-Cu200opp(:,2),'ro','MarkerSize',markersize)
+plot(1:7,Cu200expDiff,'ro','MarkerFaceColor','r','MarkerSize',markersize)
 % Cu 200GeV same theory
-plot(1:7,-Cu200Alpha*Cu20003(1:7,1),'-r','LineWidth',linewidth)
-% Cu 200GeV opp theory
-plot(1:7,-Cu200Alpha*Cu20003(1:7,2),'--r','LineWidth',linewidth)
+plot(1:7,Cu200alpha*Cu200theoDiff,'-r','LineWidth',linewidth)
 
 % Au 200GeV same exp
-plot(1:8,-Au200same(:,2),'bs','MarkerFaceColor','b','MarkerSize',markersize)
-% Au 200GeV opp exp
-plot(1:8,-Au200opp(:,2),'bs','MarkerSize',markersize)
+plot(1:8,Au200expDiff,'bs','MarkerFaceColor','b','MarkerSize',markersize)
 % Au 200GeV same theory
-plot(1:8,-Au200Alpha*Au20002(1:8,1),'-b','LineWidth',linewidth)
-% Au 200GeV opp theory
-plot(1:8,-Au200Alpha*Au20002(1:8,2),'--b','LineWidth',linewidth)
+plot(1:8,Au200alpha*Au200theoDiff,'-b','LineWidth',linewidth)
+
 set(gca,'YMinorTick','on')
-set(gca,'xticklabel',{[]}) 
+set(gca,'xticklabel',{[]})
 set(gca,'linewidth',2);
-hl = legend({'Cu $200\,\mathrm{GeV}$ $a_{++}$ Exp.','Cu $200\,\mathrm{GeV}$ $a_{+-}$ Exp.','Cu $200\,\mathrm{GeV}$ $a_{++}$ Theory','Cu $200\,\mathrm{GeV}$ $a_{+-}$ Theory',...
-    'Au $200\,\mathrm{GeV}$ $a_{++}$ Exp.','Au $200\,\mathrm{GeV}$ $a_{+-}$ Exp.','Au $200\,\mathrm{GeV}$ $a_{++}$ Theory','Au $200\,\mathrm{GeV}$ $a_{+-}$ Theory'},...
+hl = legend({'Cu $200\,\mathrm{GeV}$ Exp.','Cu $200\,\mathrm{GeV}$ Theory',...
+    'Au $200\,\mathrm{GeV}$ Exp.','Au $200\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest');
 set(hl,'FontSize',12)
 %a = get(gca,'YTickLabel');
 set(gca,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
-ylim([-6e-4 10e-4])
-text(0.05,0.10,'(a) $200\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
+%ylim([-6e-4 10e-4])
+text(0.05,0.65,'(a) $200\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
 %set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 %xlabel('Centrality','FontSize',fontsize)
-ylabel('$a_{++},\,a_{+-}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$a_{++}-a_{+-}$','Interpreter','latex','FontSize',fontsize)
 
 % plot compare Au-Au and Cu-Cu at 62GeV
 linewidth = 2;
@@ -120,38 +131,31 @@ subplot('Position',[0.10 0.07 0.88 0.43])
 hold on
 box on
 % Cu 62GeV same exp
-plot(1:7,-Cu62same(:,2),'ro','MarkerFaceColor','r','MarkerSize',10)
-% Cu 62GeV opp exp
-plot(1:7,-Cu62opp(:,2),'ro','MarkerSize',10)
+plot(1:7,Cu62expDiff,'ro','MarkerFaceColor','r','MarkerSize',10)
 % Cu 62GeV same theory
-plot(1:7,-Cu62Alpha*Cu6203(1:7,1),'-r','LineWidth',linewidth)
-% Cu 62GeV opp theory
-plot(1:7,-Cu62Alpha*Cu6203(1:7,2),'--r','LineWidth',linewidth)
+plot(1:7,Cu62alpha*Cu62theoDiff,'-r','LineWidth',linewidth)
 
 % Au 62GeV same exp
-plot(1:8,-Au62same(:,2),'bs','MarkerFaceColor','b','MarkerSize',10)
-% Au 62GeV opp exp
-plot(1:8,-Au62opp(:,2),'bs','MarkerSize',10)
+plot(1:8,Au62expDiff,'bs','MarkerFaceColor','b','MarkerSize',10)
 % Au 62GeV same theory
-plot(1:8,-Au62Alpha*Au6202(1:8,1),'-b','LineWidth',linewidth)
-% Au 62GeV opp theory
-plot(1:8,-Au62Alpha*Au6202(1:8,2),'--b','LineWidth',linewidth)
+plot(1:8,Au62alpha*Au62theoDiff,'-b','LineWidth',linewidth)
+
 set(gca,'YMinorTick','on')
 set(gca,'linewidth',2);
-hl = legend({'Cu $62\,\mathrm{GeV}$ $a_{++}$ Exp.','Cu $62\,\mathrm{GeV}$ $a_{+-}$ Exp.','Cu $62\,\mathrm{GeV}$ $a_{++}$ Theory','Cu $62\,\mathrm{GeV}$ $a_{+-}$ Theory',...
-    'Au $62\,\mathrm{GeV}$ $a_{++}$ Exp.','Au $62\,\mathrm{GeV}$ $a_{+-}$ Exp.','Au $62\,\mathrm{GeV}$ $a_{++}$ Theory','Au $62\,\mathrm{GeV}$ $a_{+-}$ Theory'},...
+hl = legend({'Cu $62\,\mathrm{GeV}$ Exp.','Cu $62\,\mathrm{GeV}$ Theory',...
+    'Au $62\,\mathrm{GeV}$ Exp.','Au $62\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest');
 set(hl,'FontSize',12)
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 
 xlim([0.5 8.5])
-ylim([-6e-4 10e-4])
-text(0.05,0.10,'(b) $62\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
+%ylim([-6e-4 10e-4])
+text(0.05,0.65,'(b) $62\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
 ax = gca;
 %ax.YTick = 10.^[-6:-2];
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$a_{++},\,a+{+-}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$a_{++}-a_{+-}$','Interpreter','latex','FontSize',fontsize)
 
 % compara to H
