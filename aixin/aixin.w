@@ -58,7 +58,7 @@ int eB(double *eBy, double *totalerror, const int verbose);
 double xifun(double xp, double yp, char sign);
 static int delta_pp_Int(const int *ndim, const double xx[], const int *ncomp, double ff[], void *userdata);
 static int delta_pm_Int(const int *ndim, const double xx[], const int *ncomp, double ff[], void *userdata);
-int csefun(double *app, double *apm, double *delta_pp, double *delta_pm);
+int csefun(double *app, double *apm, double *delta_pp, double *delta_pm, int function);
 int main(int argc, char **argv);
 double sqrtStoY(double sqrtS);
 
@@ -556,7 +556,7 @@ static int delta_pm_Int(const int *ndim, const double xx[], const int *ncomp, do
 a_{++} = a_{--} = \frac{1}{N_+^2} \frac{\pi^2}{16} \langle \Delta_\pm^2 \rangle, \quad a_{+-} = \frac{1}{N_+ N_-} \frac{\pi^2}{16} \langle \Delta_+ \Delta_- \rangle.
 \end{equation}
 @<Function: calculate chiral separation effects@>=
-int csefun(double *app, double *apm, double *delta_pp, double *delta_pm)
+int csefun(double *app, double *apm, double *delta_pp, double *delta_pm, int function)
 {
   int comp, nregions, neval, fail;
   double integral, interror, prob;
@@ -564,8 +564,13 @@ int csefun(double *app, double *apm, double *delta_pp, double *delta_pm)
   Vegas(3,1,delta_pp_Int, NULL, nvec, epsrel, epsabs, flags, seed, mineval, maxeval, nstart, nincrease, nbatch, gridno, statefile, spin, &neval, &fail, delta_pp, &interror, &prob);
   Vegas(3,1,delta_pm_Int, NULL, nvec, epsrel, epsabs, flags, seed, mineval, maxeval, nstart, nincrease, nbatch, gridno, statefile, spin, &neval, &fail, delta_pm, &interror, &prob);
   // |printf("delta_pp = %g delta_pm = %g\n", *delta_pp, *delta_pm);|
-  *app = 1.0/Sq(Np)*Sq(M_PI)/16.0*(*delta_pp);
-  *apm = 1.0/(Np*Nm)*Sq(M_PI)/16.0*(*delta_pm);
+  if (function==1) {
+    *app = 1.0/Sq(Np)*Sq(M_PI)/16.0*(*delta_pp);
+    *apm = 1.0/(Np*Nm)*Sq(M_PI)/16.0*(*delta_pm);
+  } else if (function==2) {
+    *app = 0.0;
+    *apm = 0.0;
+  }
   return 0;
 }
 
@@ -575,7 +580,10 @@ int main(int argc, char **argv)
 {
   double eBy, totalerror, app, apm, delta_pp, delta_pm;
   double tempb, tempNpm;
+  double bmin, bmax;
+  int N,i;
   int verbose;
+  int function;
   FILE *fp;
   @#
   nvec = 1;
@@ -596,46 +604,90 @@ int main(int argc, char **argv)
   statefile = NULL;
   spin = NULL;
   @#
-  
-  if (argc != 6) {
-    printf("Error: must have 5 parameters!\n"
-           "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+  if (argc < 2) {
+    printf("Error: must choose a function!\n"
+           "  1 --- centrality dependence of a++, a+- and |a+-|/a++\n"
+           "  2 --- impact parameter dependence of |a+-|/a++\n");
     return 0;
   }
-  @#
-  if (strcmp(argv[1], "ellipsoid") == 0) {
-    method = 0;
-  } else if (strcmp(argv[1], "disklike") == 0) {
-    method = 1;
+  function = atoi(argv[1]);
+  if (function == 1) {
+    if (argc != 7) {
+      printf("Error: Function 1 must have 6 parameters!\n"
+             "Usage: aixin 1 method Au/Pb/Cu sqrtS lambda Nfile \n");
+      return 0;
+    }
+    if (strcmp(argv[2], "ellipsoid") == 0) {
+      method = 0;
+    } else if (strcmp(argv[2], "disklike") == 0) {
+      method = 1;
+    } else {
+      printf("Error: method must be ellipsoid or disklike\n"
+             "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+    }
+    @<Set nuclear parameters@>@/
+    Y0 = sqrtStoY(atof(argv[4]));
+    lambda = atof(argv[5]) * R;
+    fp = fopen(argv[6], "r");
+    if (fp == NULL) {
+      printf("Error: Can't open %s\n", argv[6]);
+      exit(EXIT_FAILURE);
+    }
+    a=0.5;
+    x = 0.0;
+    y = 0.0;
+    z = 0.0;
+    t0 = 2.0 * R * exp(-Y0);
+    t = t0;
+    printf("# app, apm, abs(apm)/app\n");
+    while (fscanf(fp, "%lf%lf", &tempb, &tempNpm) == 2) {
+      b = tempb;
+      Np = tempNpm/2.0;
+      Nm = tempNpm/2.0;
+      eB(&eBy, &totalerror, 0);
+      eBy0 = eBy/Sq(hbarc);
+      csefun(&app, &apm, &delta_pp, &delta_pm, function);
+      printf("%g, %g, %g\n", app, apm, fabs(apm)/app);
+    }
+  } else if (function == 2) {
+    if (argc != 7) {
+      printf("Error: Function 2 must have 6 parameters!\n"
+             "Usage: aixin 2 method Au/Pb/Cu sqrtS lambda N \n");
+      return 0;
+    }
+    if (strcmp(argv[2], "ellipsoid") == 0) {
+      method = 0;
+    } else if (strcmp(argv[2], "disklike") == 0) {
+      method = 1;
+    } else {
+      printf("Error: method must be ellipsoid or disklike\n"
+             "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+    }
+    @<Set nuclear parameters@>@/
+    Y0 = sqrtStoY(atof(argv[4]));
+    lambda = atof(argv[5]) * R;
+    bmin = 0.0;
+    bmax = 2.0*R;
+    N = atoi(argv[6]);
+    
+    a=0.5;
+    x = 0.0;
+    y = 0.0;
+    z = 0.0;
+    t0 = 2.0 * R * exp(-Y0);
+    t = t0;
+    printf("# b/R, abs(apm)/app, R = %g\n", R);
+    for (i = 0; i < N; i++) {
+      b = bmin + (bmax - bmin) * i / N;
+      eB(&eBy, &totalerror, 0);
+      eBy0 = eBy/Sq(hbarc);
+      csefun(&app, &apm, &delta_pp, &delta_pm, function);
+      printf("%g, %g\n", b/R, fabs(delta_pm)/delta_pp);
+    }
   } else {
-    printf("Error: method must be ellipsoid or disklike\n"
-            "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+    printf("Error: function must be 1 or 2!\n");
   }
-  @<Set nuclear parameters@>@/
   
-  Y0 = sqrtStoY(atof(argv[3]));
-  lambda = atof(argv[4]) * R;
-  fp = fopen(argv[5], "r");
-  if (fp == NULL) {
-    printf("Error: Can't open %s\n", argv[5]);
-    exit(EXIT_FAILURE);
-  }
-  a=0.5;
-  x = 0.0;
-  y = 0.0;
-  z = 0.0;
-  t0 = 2.0 * R * exp(-Y0);
-  t = t0;
-  printf("# app, apm, abs(apm)/app\n");
-  while (fscanf(fp, "%lf%lf", &tempb, &tempNpm) == 2) {
-    b = tempb;
-    Np = tempNpm/2.0;
-    Nm = tempNpm/2.0;
-    eB(&eBy, &totalerror, 0);
-    eBy0 = eBy/Sq(hbarc);
-    csefun(&app, &apm, &delta_pp, &delta_pm);
-    printf("%g, %g, %g\n", app, apm, fabs(apm)/app);
-  }
   return 0;
 }
 
@@ -683,17 +735,17 @@ n_0 = 7.69244 \times 10^{-4} \quad \text{for} \prescript{208}{}{\mathrm{Pb}}, \\
 n_0 = 2.67894 \times 10^{-3} \quad \text{for} \prescript{63}{}{\mathrm{Cu}}.
 \end{gather}
 @<Set nuclear parameters@>=
-if (strcmp(argv[2], "Au") == 0) {
+if (strcmp(argv[3], "Au") == 0) {
     R = 6.38; 
     d = 0.535;
     n0 = 8.59624e-4;
     Z = 79.0;
-  }@+ else if (strcmp(argv[2], "Pb") == 0) {
+  }@+ else if (strcmp(argv[3], "Pb") == 0) {
     R = 6.624;
     d = 0.549;
     n0 = 7.69244e-4;
     Z = 82.0;
-  }@+ else if (strcmp(argv[2], "Cu") == 0) {
+  }@+ else if (strcmp(argv[3], "Cu") == 0) {
     R = 4.214;
     d = 0.586;
     n0 = 2.67894e-3;
