@@ -12,21 +12,21 @@ Cu200same = csvread('exp data/Cu200GeVsame.csv');
 
 
 % theory data
-Au6201 = csvread('result/Au62GeV0.1.txt',1,0);
-Au6202 = csvread('result/Au62GeV0.2.txt',1,0);
-Au6203 = csvread('result/Au62GeV0.3.txt',1,0);
-Au20001 = csvread('result/Au200GeV0.1.txt',1,0);
-Au20002 = csvread('result/Au200GeV0.2.txt',1,0);
-Au20003 = csvread('result/Au200GeV0.3.txt',1,0);
-Pb276001 = csvread('result/Pb2760GeV0.1.txt',1,0);
-Pb276002 = csvread('result/Pb2760GeV0.2.txt',1,0);
-Pb276003 = csvread('result/Pb2760GeV0.3.txt',1,0);
-Cu6201 = csvread('result/Cu62GeV0.1.txt',1,0);
-Cu6202 = csvread('result/Cu62GeV0.2.txt',1,0);
-Cu6203 = csvread('result/Cu62GeV0.3.txt',1,0);
-Cu20001 = csvread('result/Cu200GeV0.1.txt',1,0);
-Cu20002 = csvread('result/Cu200GeV0.2.txt',1,0);
-Cu20003 = csvread('result/Cu200GeV0.3.txt',1,0);
+Au6201 = csvread('result/disklike/Au62GeV0.1.txt',1,0);
+Au6202 = csvread('result/disklike/Au62GeV0.2.txt',1,0);
+Au6203 = csvread('result/disklike/Au62GeV0.3.txt',1,0);
+Au20001 = csvread('result/disklike/Au200GeV0.1.txt',1,0);
+Au20002 = csvread('result/disklike/Au200GeV0.2.txt',1,0);
+Au20003 = csvread('result/disklike/Au200GeV0.3.txt',1,0);
+Pb276001 = csvread('result/disklike/Pb2760GeV0.1.txt',1,0);
+Pb276002 = csvread('result/disklike/Pb2760GeV0.2.txt',1,0);
+Pb276003 = csvread('result/disklike/Pb2760GeV0.3.txt',1,0);
+Cu6201 = csvread('result/disklike/Cu62GeV0.1.txt',1,0);
+Cu6202 = csvread('result/disklike/Cu62GeV0.2.txt',1,0);
+Cu6203 = csvread('result/disklike/Cu62GeV0.3.txt',1,0);
+Cu20001 = csvread('result/disklike/Cu200GeV0.1.txt',1,0);
+Cu20002 = csvread('result/disklike/Cu200GeV0.2.txt',1,0);
+Cu20003 = csvread('result/disklike/Cu200GeV0.3.txt',1,0);
 
 fprintf('Au62:\n');
 [Au62expDiff, Au62theoDiff, Au62alpha, Au62mse] = gammaDiffFun(Au62opp,Au62same,Au6201,0); %min
@@ -117,7 +117,8 @@ set(hl,'FontSize',12)
 set(gca,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 %ylim([-6e-4 10e-4])
-text(0.05,0.65,'(a) $200\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
+%text(0.05,0.65,'(a) $200\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
+text(3.5,1.1e-3,'(a)','FontSize',fontsize-2)
 %set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 %xlabel('Centrality','FontSize',fontsize)
 ylabel('$a_{++}-a_{+-}$','Interpreter','latex','FontSize',fontsize)
@@ -151,7 +152,8 @@ set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 
 xlim([0.5 8.5])
 %ylim([-6e-4 10e-4])
-text(0.05,0.65,'(b) $62\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
+%text(0.05,0.65,'(b) $62\,\mathrm{GeV}$','FontSize',fontsize-2,'Interpreter','latex','Unit','normalized')
+text(3.5,1.375e-3,'(b)','FontSize',fontsize-2)
 ax = gca;
 %ax.YTick = 10.^[-6:-2];
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
