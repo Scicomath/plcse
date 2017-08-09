@@ -45,19 +45,19 @@ plot(2:8,Au200Hopp,'bo','MarkerSize',markdersize)
 plot(1:8,Pb2760Hsame,'rs','MarkerFaceColor','r','MarkerSize',markdersize)
 plot(1:8,Pb2760Hopp,'rs','MarkerSize',markdersize)
 set(gca,'linewidth',2);
-legend({'Au $200\,\mathrm{GeV}\,H_{SS}$','Au $200\,\mathrm{GeV}\,H_{OS}$',...
-    'Pb $2760\,\mathrm{GeV}\,H_{SS}$','Pb $2760\,\mathrm{GeV}\,H_{OS}$'},...
+legend({'Au $200\,\mathrm{GeV}\,H_{\mathrm{SS}}$','Au $200\,\mathrm{GeV}\,H_{\mathrm{OS}}$',...
+    'Pb $2760\,\mathrm{GeV}\,H_{\mathrm{SS}}$','Pb $2760\,\mathrm{GeV}\,H_{\mathrm{OS}}$'},...
     'Interpreter','latex','Location','northwest')
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$H$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}$ or $H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
 
 %% compare to Hdiff at RHIC
-Au200HAlpha = 36.7036678707; % lambda = 0.2
-Pb2760HAlpha = 52.1759788024; % lambda = 0.2
+Au200HAlpha = 38.3196887169; % lambda = 0.2
+Pb2760HAlpha = 48.5725746195; % lambda = 0.2
 % linewidth = 2;
 % fontsize = 18;
 % markersize = 10;
@@ -65,7 +65,7 @@ figure
 hold on
 box on
 plot(2:8,Au200Hdiff,'ro','MarkerFaceColor','r','MarkerSize',markersize)
-plot(2:8,Au20002Diff*Au200HAlpha,'-r','LineWidth',linewidth)
+plot(1:8,(Au20002(1:8,1) - Au20002(1:8,2))*Au200HAlpha,'-k','LineWidth',linewidth)
 set(gca,'linewidth',2);
 legend({'Au $200\,\mathrm{GeV}$ Exp.','Au $200\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest')
@@ -74,24 +74,24 @@ set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$H_{SS}-H_{OS}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}-H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
 
 %% compare Au Cu Hdiff at RHIC
-Au200HAlpha = 36.7036678707; % lambda = 0.2
+Au200HAlpha = 38.3196887169; % lambda = 0.2
 figure
 hold on
 box on
 plot(1:7,(Au20002(1:7,1) - Au20002(1:7,2))*Au200HAlpha,'-or','LineWidth',linewidth)
 plot(1:7,(Cu20002(1:7,1) - Cu20002(1:7,2))*Au200HAlpha,'-ob','LineWidth',linewidth)
 set(gca,'linewidth',2);
-legend({'Au $200\,\mathrm{GeV}$','Cu $200\,\mathrm{GeV}$'},...
+legend({'Au-Au $200\,\mathrm{GeV}$ Theory','Cu-Cu $200\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest')
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 7.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$a_{++}-a_{+-}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}-H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
 
 
 
@@ -103,7 +103,7 @@ figure
 hold on
 box on
 plot(1:8,Pb2760Hdiff,'ro','MarkerFaceColor','r','MarkerSize',markersize)
-plot(1:8,Pb276002Diff*Pb2760HAlpha,'-r','LineWidth',linewidth)
+plot(1:8,Pb276002Diff*Pb2760HAlpha,'-k','LineWidth',linewidth)
 set(gca,'linewidth',2);
 legend({'Pb $2760\,\mathrm{GeV}$ Exp.','Pb $2760\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest')
@@ -112,7 +112,7 @@ set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$H_{SS}-H_{OS}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}-H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
 
 %% plot all
 linewidth = 2;
@@ -123,22 +123,22 @@ hold on
 box on
 plot(2:8,Au200Hdiff,'ro','MarkerFaceColor','r','MarkerSize',markersize)
 plot(2:8,Au20002Diff*Au200HAlpha,'-r','LineWidth',linewidth)
-plot(1:8,Pb2760Hdiff,'ro','MarkerSize',markersize)
-plot(1:8,Pb276002Diff*Pb2760HAlpha,'--r','LineWidth',linewidth)
+plot(1:8,Pb2760Hdiff,'bo','MarkerSize',markersize)
+plot(1:8,Pb276002Diff*Pb2760HAlpha,'--b','LineWidth',linewidth)
 set(gca,'linewidth',2);
-legend({'Au $200\,\mathrm{GeV}$ Exp.','Au $200\,\mathrm{GeV}$ Theory',...
-    'Pb $2760\,\mathrm{GeV}$ Exp.','Pb $2760\,\mathrm{GeV}$ Theory'},...
+legend({'Au-Au $200\,\mathrm{GeV}$ Exp.','Au-Au $200\,\mathrm{GeV}$ Theory',...
+    'Pb-Pb $2760\,\mathrm{GeV}$ Exp.','Pb-Pb $2760\,\mathrm{GeV}$ Theory'},...
     'Interpreter','latex','Location','northwest')
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$H_{SS}-H_{OS}$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}-H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
 
 %% compare to Hss and Hos at RHIC
-Au200HAlpha = 57.3189071147; % lambda = 0.1
-Pb2760HAlpha = 184.449207662; % lambda = 0.1
+Au200HAlpha = 98.7731566758; % lambda = 0.1
+Pb2760HAlpha = 395.05382961; % lambda = 0.1
 linewidth = 2;
 fontsize = 18;
 markersize = 10;
@@ -155,14 +155,14 @@ plot(1:8,Au200HAlpha*Au20001(1:8,1),'-r','LineWidth',linewidth)
 % Au 200GeV opp theory
 plot(1:8,Au200HAlpha*Au20001(1:8,2),'--r','LineWidth',linewidth)
 set(gca,'linewidth',2);
-legend({'Au $200\,\mathrm{GeV}$ $H_{SS}$ Exp.','Au $200\,\mathrm{GeV}$ $H_{OS}$ Exp.','Au $200\,\mathrm{GeV}$ $a_{++}$ Theory','Au $200\,\mathrm{GeV}$ $a_{+-}$ Theory'},...
+legend({'Au-Au $200\,\mathrm{GeV}$ $H_{\mathrm{SS}}$ Exp.','Au-Au $200\,\mathrm{GeV}$ $H_{\mathrm{OS}}$ Exp.','Au-Au $200\,\mathrm{GeV}$ $H_{\mathrm{SS}}$ Theory','Au-Au $200\,\mathrm{GeV}$ $H_{\mathrm{OS}}$ Theory'},...
     'Interpreter','latex','Location','northwest')
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$a(H)$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}$ or $H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
 
 % compare to H at LHC
 linewidth = 2;
@@ -181,11 +181,11 @@ plot(1:8,Pb2760HAlpha*Pb276001(1:8,1),'-r','LineWidth',linewidth)
 % Pb 2760GeV opp theory
 plot(1:8,Pb2760HAlpha*Pb276001(1:8,2),'--r','LineWidth',linewidth)
 set(gca,'linewidth',2);
-legend({'Pb $2760\,\mathrm{GeV}$ $H_{SS}$ Exp.','Pb $2760\,\mathrm{GeV}$ $H_{OS}$ Exp.','Pb $2760\,\mathrm{GeV}$ $a_{++}$ Theory','Pb $2760\,\mathrm{GeV}$ $a_{+-}$ Theory'},...
+legend({'Pb-Pb $2760\,\mathrm{GeV}$ $H_{\mathrm{SS}}$ Exp.','Pb-Pb $2760\,\mathrm{GeV}$ $H_{\mathrm{OS}}$ Exp.','Pb-Pb $2760\,\mathrm{GeV}$ $H_{\mathrm{SS}}$ Theory','Pb-Pb $2760\,\mathrm{GeV}$ $H_{\mathrm{OS}}$ Theory'},...
     'Interpreter','latex','Location','northwest')
 a = get(gca,'XTickLabel');
 set(gca,'XTickLabel',a,'FontName','Times','FontSize',fontsize-2)
 xlim([0.5 8.5])
 set(gca,'XTickLabel',{'0-5%','5-10%','10-20%','20-30%','30-40%','40-50%','50-60%','60-70%','70-80%'})
 xlabel('Centrality','FontSize',fontsize)
-ylabel('$a(H)$','Interpreter','latex','FontSize',fontsize)
+ylabel('$H_{\mathrm{SS}}$ or $H_{\mathrm{OS}}$','Interpreter','latex','FontSize',fontsize)
