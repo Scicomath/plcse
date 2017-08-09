@@ -494,7 +494,7 @@ static int delta_pp_Int(const int *ndim, const double xx[], const int *ncomp, do
   Imin[1] = -sqrt(Sq(R) - Sq(fabs(xp) + b/2.0));
   Imax[1] = -Imin[1];
   yp = Imin[1] + (Imax[1] - Imin[1]) * xx[1];
-  Imin[2] = 2.0 * R * exp(-Y0);
+  Imin[2] = t0; // 2.0 * R * exp(-Y0);
   Imax[2] = 15.0;
   tau = Imin[2] + (Imax[2] - Imin[2]) * xx[2];
 
@@ -533,7 +533,7 @@ static int delta_pm_Int(const int *ndim, const double xx[], const int *ncomp, do
   Imin[1] = -sqrt(Sq(R) - Sq(fabs(xp) + b/2.0));
   Imax[1] = -Imin[1];
   yp = Imin[1] + (Imax[1] - Imin[1]) * xx[1];
-  Imin[2] = 2.0 * R * exp(-Y0);
+  Imin[2] = t0; // 2.0 * R * exp(-Y0);
   Imax[2] = 15.0;
   tau = Imin[2] + (Imax[2] - Imin[2]) * xx[2];
 
@@ -637,10 +637,11 @@ int main(int argc, char **argv)
     x = 0.0;
     y = 0.0;
     z = 0.0;
-    t0 = 2.0 * R * exp(-Y0);
-    t = t0;
+    // t0 = 2.0 * R * exp(-Y0);
+
     printf("# app, apm, abs(apm)/app\n");
-    while (fscanf(fp, "%lf%lf", &tempb, &tempNpm) == 2) {
+    while (fscanf(fp, "%lf%lf%lf", &t0, &tempb, &tempNpm) == 3) {
+      t = t0;
       b = tempb;
       Np = tempNpm/2.0;
       Nm = tempNpm/2.0;
@@ -650,9 +651,9 @@ int main(int argc, char **argv)
       printf("%g, %g, %g\n", app, apm, fabs(apm)/app);
     }
   } else if (function == 2) {
-    if (argc != 7) {
-      printf("Error: Function 2 must have 6 parameters!\n"
-             "Usage: aixin 2 method Au/Pb/Cu sqrtS lambda N \n");
+    if (argc != 8) {
+      printf("Error: Function 2 must have 7 parameters!\n"
+             "Usage: aixin 2 method Au/Pb/Cu sqrtS lambda N tau0 \n");
       return 0;
     }
     if (strcmp(argv[2], "ellipsoid") == 0) {
@@ -661,7 +662,7 @@ int main(int argc, char **argv)
       method = 1;
     } else {
       printf("Error: method must be ellipsoid or disklike\n"
-             "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+             "Usage: aixin 2 method Au/Pb/Cu sqrtS lambda N tau0 \n");
     }
     @<Set nuclear parameters@>@/
     Y0 = sqrtStoY(atof(argv[4]));
@@ -669,12 +670,14 @@ int main(int argc, char **argv)
     bmin = 0.0;
     bmax = 2.0*R;
     N = atoi(argv[6]);
+    t0 = atof(argv[7]);
+    // t0 = 2.0 * R * exp(-Y0);
     
     a=0.5;
     x = 0.0;
     y = 0.0;
     z = 0.0;
-    t0 = 2.0 * R * exp(-Y0);
+    
     t = t0;
     printf("# b/R, abs(apm)/app, R = %g\n", R);
     for (i = 0; i < N; i++) {
