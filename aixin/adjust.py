@@ -77,17 +77,19 @@ def adjustfun(expopp, expsame, theorydata):
     samelen = len(expsame)
     def objfun(alpha):
         temp1 = expopp[:opplen] - theorydata[:,1][:opplen]*alpha
+        temp11 = temp1**2/abs(expopp[:opplen])
         temp2 = expsame[:samelen] - theorydata[:,0][:samelen]*alpha
-        return sum(temp1**2) + sum(temp2**2)
+        temp22 = temp2**2/abs(expsame[:samelen])
+        return sum(temp11) + sum(temp22)
     res = minimize_scalar(objfun, method='brent')
-    print("alpha =", res.x, "MSE =", res.fun)
+    print("alpha =", res.x, "chi2 =", res.fun)
     return res
 def adjustfun2(Hdiff, theDiff):
     def objfun(alpha):
-        temp = Hdiff - theDiff*alpha
-        return sum(temp**2)
+        temp = (Hdiff - theDiff*alpha)**2/Hdiff
+        return sum(temp)
     res = minimize_scalar(objfun, method='brent')
-    print("alpha =", res.x, "MSE =", res.fun)
+    print("alpha =", res.x, "chi2 =", res.fun)
     return res
 
 print("Au 62GeV lambda/R = 0.1, 0.2, 0.3")
