@@ -607,7 +607,9 @@ int main(int argc, char **argv)
   if (argc < 2) {
     printf("Error: must choose a function!\n"
            "  1 --- centrality dependence of a++, a+- and |a+-|/a++\n"
-           "  2 --- impact parameter dependence of |a+-|/a++\n");
+           "  2 --- impact parameter dependence of |a+-|/a++\n"
+           "  3 --- time dependence of eB in vacuum\n"
+           "  4 --- time dependence of eB considering QGP medium");
     return 0;
   }
   function = atoi(argv[1]);
@@ -686,6 +688,73 @@ int main(int argc, char **argv)
       eBy0 = eBy/Sq(hbarc);
       csefun(&app, &apm, &delta_pp, &delta_pm, function);
       printf("%g, %g\n", b/R, fabs(delta_pm)/delta_pp);
+    }
+  } else if (function == 3) {
+    if (argc != 8) {
+      printf("Error: Function 3 must have 7 parameters!\n"
+             "Usage: aixin 3 method Au/Pb/Cu sqrtS b tau0 N\n");
+      return 0;
+    }
+    if (strcmp(argv[2], "ellipsoid") == 0) {
+      method = 0;
+    } else if (strcmp(argv[2], "disklike") == 0) {
+      method = 1;
+    } else {
+      printf("Error: method must be ellipsoid or disklike\n"
+             "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+    }
+    @<Set nuclear parameters@>@/
+    Y0 = sqrtStoY(atof(argv[4]));
+    b = atof(argv[5]);
+    t0 = atof(argv[6]);
+    N = atoi(argv[7]);
+    
+    a = 0.5;
+    x = 0.0;
+    y = 0.0;
+    z = 0.0;
+    for (i = 0; i < N; i++) {
+      t = (double)i/(double)N * 5.0;
+      eB(&eBy, &totalerror, 0);
+      printf("%g, %g\n", t, eBy);
+    }
+  } else if (function == 4) {
+    if (argc != 8) {
+      printf("Error: Function 4 must have 7 parameters!\n"
+             "Usage: aixin 4 method Au/Pb/Cu sqrtS b tau0 N\n");
+      return 0;
+    }
+    if (strcmp(argv[2], "ellipsoid") == 0) {
+      method = 0;
+    } else if (strcmp(argv[2], "disklike") == 0) {
+      method = 1;
+    } else {
+      printf("Error: method must be ellipsoid or disklike\n"
+             "Usage: aixin method Au/Pb/Cu sqrtS lambda Nfile \n");
+    }
+    @<Set nuclear parameters@>@/
+    Y0 = sqrtStoY(atof(argv[4]));
+    b = atof(argv[5]);
+    t0 = atof(argv[6]);
+    N = atoi(argv[7]);
+    
+    a = 0.5;
+    x = 0.0;
+    y = 0.0;
+    z = 0.0;
+    
+    t = t0;
+    eB(&eBy, &totalerror, 0);
+    eBy0 = eBy;
+    
+    for (i = 0; i < N; i++) {
+      t = (double)i/(double)N * 5.0;
+      if (t < t0) {
+        eB(&eBy, &totalerror, 0);
+      } else {
+        eBy = (t0/t)*exp( -1.0/54.0*(Sq(t)-Sq(t0)) )*eBy0;
+      }
+      printf("%g, %g\n", t, eBy);
     }
   } else {
     printf("Error: function must be 1 or 2!\n");
