@@ -65,6 +65,22 @@ Cu20001 = genfromtxt('result/disklike/Cu200GeV0.1.txt', delimiter=',')
 Cu20002 = genfromtxt('result/disklike/Cu200GeV0.2.txt', delimiter=',')
 Cu20003 = genfromtxt('result/disklike/Cu200GeV0.3.txt', delimiter=',')
 
+#Au6201 = genfromtxt('result/ellipsoid/Au62GeV0.1.txt', delimiter=',')
+#Au6202 = genfromtxt('result/ellipsoid/Au62GeV0.2.txt', delimiter=',')
+#Au6203 = genfromtxt('result/ellipsoid/Au62GeV0.3.txt', delimiter=',')
+#Au20001 = genfromtxt('result/ellipsoid/Au200GeV0.1.txt', delimiter=',')
+#Au20002 = genfromtxt('result/ellipsoid/Au200GeV0.2.txt', delimiter=',')
+#Au20003 = genfromtxt('result/ellipsoid/Au200GeV0.3.txt', delimiter=',')
+#Pb276001 = genfromtxt('result/ellipsoid/Pb2760GeV0.1.txt', delimiter=',')
+#Pb276002 = genfromtxt('result/ellipsoid/Pb2760GeV0.2.txt', delimiter=',')
+#Pb276003 = genfromtxt('result/ellipsoid/Pb2760GeV0.3.txt', delimiter=',')
+#Cu6201 = genfromtxt('result/ellipsoid/Cu62GeV0.1.txt', delimiter=',')
+#Cu6202 = genfromtxt('result/ellipsoid/Cu62GeV0.2.txt', delimiter=',')
+#Cu6203 = genfromtxt('result/ellipsoid/Cu62GeV0.3.txt', delimiter=',')
+#Cu20001 = genfromtxt('result/ellipsoid/Cu200GeV0.1.txt', delimiter=',')
+#Cu20002 = genfromtxt('result/ellipsoid/Cu200GeV0.2.txt', delimiter=',')
+#Cu20003 = genfromtxt('result/ellipsoid/Cu200GeV0.3.txt', delimiter=',')
+
 Au20001Diff = Au20001[1:8,0] - Au20001[1:8,1]
 Au20002Diff = Au20002[1:8,0] - Au20002[1:8,1]
 Au20003Diff = Au20003[1:8,0] - Au20003[1:8,1]
@@ -92,6 +108,13 @@ def adjustfun2(Hdiff, theDiff):
     print("alpha =", res.x, "chi2 =", res.fun)
     return res
 
+def adjustfun3(Hdiff, theDiff):
+    def objfun(alpha):
+        temp = (Hdiff - theDiff*alpha)**2
+        return sum(temp)
+    res = minimize_scalar(objfun, method='brent')
+    print("alpha =", res.x, "chi2 =", res.fun)
+    return res
 print("Au 62GeV lambda/R = 0.1, 0.2, 0.3")
 adjustfun(Au62opp[:,1], Au62same[:,1], Au6201)
 adjustfun(Au62opp[:,1], Au62same[:,1], Au6202)
@@ -126,11 +149,22 @@ adjustfun(Pb2760Hopp, Pb2760Hsame, Pb276003)
 
 # H diff result
 print("Au 200GeV lambda/R = 0.1, 0.2, 0.3")
-adjustfun2(Au200Hdiff, Au20001Diff)
-adjustfun2(Au200Hdiff, Au20002Diff)
-adjustfun2(Au200Hdiff, Au20003Diff)
+adjustfun2(Au200Hdiff[:6], Au20001Diff[:6])
+adjustfun2(Au200Hdiff[:6], Au20002Diff[:6])
+adjustfun2(Au200Hdiff[:6], Au20003Diff[:6])
 
 print("Pb 2760GeV lambda/R = 0.1, 0.2, 0.3")
-adjustfun2(Pb2760Hdiff, Pb276001Diff)
-adjustfun2(Pb2760Hdiff, Pb276002Diff)
-adjustfun2(Pb2760Hdiff, Pb276003Diff)
+adjustfun2(Pb2760Hdiff[:7], Pb276001Diff[:7])
+adjustfun2(Pb2760Hdiff[:7], Pb276002Diff[:7])
+adjustfun2(Pb2760Hdiff[:7], Pb276003Diff[:7])
+
+# H diff result
+print("Au 200GeV lambda/R = 0.1, 0.2, 0.3")
+adjustfun3(Au200Hdiff, Au20001Diff)
+adjustfun3(Au200Hdiff, Au20002Diff)
+adjustfun3(Au200Hdiff, Au20003Diff)
+
+print("Pb 2760GeV lambda/R = 0.1, 0.2, 0.3")
+adjustfun3(Pb2760Hdiff, Pb276001Diff)
+adjustfun3(Pb2760Hdiff, Pb276002Diff)
+adjustfun3(Pb2760Hdiff, Pb276003Diff)
