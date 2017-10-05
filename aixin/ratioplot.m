@@ -26,32 +26,34 @@ fontsize = 18;
 markersize = 10;
 
 figure
-subplot('Position',[0.15 0.58 0.75 0.38])
+%subplot('Position',[0.15 0.58 0.75 0.38])
 box on
 plot(Au20001(:,1),Au20001(:,2),'-.',...
      Au20002(:,1),Au20002(:,2),'--',...
      Au20003(:,1),Au20003(:,2),'-','LineWidth',linewidth);
 set(gca,'linewidth',2,'FontName','Times','FontSize',fontsize-2);
-legend({'Au $200\,\mathrm{GeV}\,\lambda = 0.1 R$','Au $200\,\mathrm{GeV}\,\lambda = 0.2 R$', 'Au $200\,\mathrm{GeV}\,\lambda = 0.3 R$'},...
+%legend({'Au $200\,\mathrm{GeV}\,\lambda = 0.1 R$','Au $200\,\mathrm{GeV}\,\lambda = 0.2 R$', 'Au $200\,\mathrm{GeV}\,\lambda = 0.3 R$'},...
+%     'Interpreter','latex','Location','northwest');
+legend({'$\lambda = 0.1 R$','$\lambda = 0.2 R$', '$\lambda = 0.3 R$'},...
      'Interpreter','latex','Location','northwest');
 xlabel('$b/R$','Interpreter','latex')
 ylabel('$|a_{+-}|/a_{++}$','Interpreter','latex')
-text(1,0.9,'(a)','FontSize',fontsize-2)
+%text(1,0.9,'(a)','FontSize',fontsize-2)
 set(gca,'FontName','Times','FontSize',fontsize-2)
-
-subplot('Position',[0.15 0.1 0.75 0.40])
-box on
-plot(Pb276001(:,1),Pb276001(:,2),'-.',...
-     Pb276002(:,1),Pb276002(:,2),'--',...
-     Pb276003(:,1),Pb276003(:,2),'-','LineWidth',linewidth);
-ylim([0 1.5])
-set(gca,'linewidth',2,'FontName','Times','FontSize',fontsize-2);
-legend({'Pb $2760\,\mathrm{GeV}\,\lambda = 0.1 R$','Pb $2760\,\mathrm{GeV}\,\lambda = 0.2 R$', 'Pb $2760\,\mathrm{GeV}\,\lambda = 0.3 R$'},...
-     'Interpreter','latex','Location','northwest');
-xlabel('$b/R$','Interpreter','latex')
-ylabel('$|a_{+-}|/a_{++}$','Interpreter','latex')
-text(1,1.35,'(b)','FontSize',fontsize-2)
-set(gca,'FontName','Times','FontSize',fontsize-2)
+% 
+% subplot('Position',[0.15 0.1 0.75 0.40])
+% box on
+% plot(Pb276001(:,1),Pb276001(:,2),'-.',...
+%      Pb276002(:,1),Pb276002(:,2),'--',...
+%      Pb276003(:,1),Pb276003(:,2),'-','LineWidth',linewidth);
+% ylim([0 1.5])
+% set(gca,'linewidth',2,'FontName','Times','FontSize',fontsize-2);
+% legend({'Pb $2760\,\mathrm{GeV}\,\lambda = 0.1 R$','Pb $2760\,\mathrm{GeV}\,\lambda = 0.2 R$', 'Pb $2760\,\mathrm{GeV}\,\lambda = 0.3 R$'},...
+%      'Interpreter','latex','Location','northwest');
+% xlabel('$b/R$','Interpreter','latex')
+% ylabel('$|a_{+-}|/a_{++}$','Interpreter','latex')
+% text(1,1.35,'(b)','FontSize',fontsize-2)
+% set(gca,'FontName','Times','FontSize',fontsize-2)
 % 
 % subplot(2,2,3)
 % box on
